@@ -7,6 +7,7 @@ import numpy as np
 from Bio import PDB
 import scipy.spatial as spatial
 import scipy.spatial.distance as distance
+from scipy.spatial import ConvexHull, Delaunay, Voronoi
 
 pdbid = '1crn'
 chainid = 'A'
@@ -46,13 +47,25 @@ def PointCloudData(pdbid, chainid):
 	return pointcloud, bf, resnames
 
 
+def ProteinDelaunay(pointcloud, pdbid, chain):
+	""" Generate the Delaunay Tessellation of all the points in the given point cloud.
+	The point cloud is basically the Calpha coordinates of a three dimensional protein.
+	The point, vertices, simplices and neighbors in the entire point cloud are obtained
+	as arrays.
+	"""
+	# Convex Hull.
+	ConHull = ConvexHull(pointcloud)
+	hullArea = round(ConHull.area, 4)
+	hullVolume = round(ConHull.volume, 4)
+
+
+
 
 pc, bf, rsname = PointCloudData(pdbid, chainid)
-print (pc, len(pc))
-print (bf, len(bf))
-print (rsname, len(rsname))
-
-
+ProteinDelaunay(pc, pdbid, chainid)
+# print (pc, len(pc))
+# print (bf, len(bf))
+# print (rsname, len(rsname))
 
 
 
