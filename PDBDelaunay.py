@@ -11,8 +11,8 @@ from scipy.spatial import ConvexHull, Delaunay, Voronoi
 
 pdbid = '1crn'
 chainid = 'A'
-filename = 'pdb'+pdbid+'.ent'
-print (filename)
+filename = 'pdb' + pdbid + '.ent'
+print (filename) 
 
 
 def List_to_CSV(OutFname, DataList):
@@ -54,9 +54,9 @@ def ProteinDelaunay(pointcloud, pdbid, chain):
 	as arrays.
 	"""
 	# Convex Hull.
-	ConHull = ConvexHull(pointcloud)
-	hullArea = round(ConHull.area, 4)
-	hullVolume = round(ConHull.volume, 4)
+	ConvxHull = ConvexHull(pointcloud)
+	hullArea = round(ConvxHull.area, 4)
+	hullVolume = round(ConvxHull.volume, 4)
 
 
 
