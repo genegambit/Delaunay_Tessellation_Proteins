@@ -10,7 +10,7 @@ def replace_all(text, dic):
         text = text.replace(i, j)
     return text
 
-
+# List of one letter amino acid codes.
 amino = ['V','I','L','E','Q','D','N','H','W','F','Y','R','K','S','T','M','A','G','P','C']
 
 

@@ -14,7 +14,6 @@ from scipy.spatial import ConvexHull, Delaunay, Voronoi
 pdbid = '1crn'
 chainid = 'A'
 filename = 'pdb' + pdbid + '.ent'
-print (filename) 
 
 
 def List_to_CSV(OutFname, DataList):
@@ -69,7 +68,10 @@ def ProteinDelaunay(pdbid, chain):
     The point, vertices, simplices and neighbors in the entire point cloud are obtained
     as arrays.
     """
-
+    Data = []
+    Head = ['PDBID', 'Quad', 'SortedQuad', 'RedAlpha', 'SortRedAlpha', 'V1', 'V2', 'V3', 'V4', 'L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'SumL', 'AvgL', 'DevL', 'DevTetra', 'Vol', 'TF1', 'TF2', 'TF3', 'TF4', 'SumTF', 'AvgTF']
+    Data.append(Head)
+    
     pointcloud, bf, resname = PointCloudData(pdbid, chainid)
 
     # Convex Hull.
@@ -83,13 +85,11 @@ def ProteinDelaunay(pdbid, chain):
     delaunay_vertices = delaunay_hull.vertices
     delaunay_simplices = delaunay_hull.simplices
     delaunay_neighbors = delaunay_hull.neighbors
-    for xx in delaunay_simplices:
-        print (xx)
 
     for i in delaunay_vertices:
-        print (i)
+
         # Obtain the indices of the vertices.
-        one, two, three, four = i[2], i[0], i[1], i[3]
+        one, two, three, four = i[2], i[1], i[3], i[0]
 
         # Obtain the coordinates based on the indices.
         cordA = pointcloud[one]
@@ -175,11 +175,16 @@ def ProteinDelaunay(pdbid, chain):
         lenArr = [AB, AC, AD, BC, BD, CD]
         DevT = DevTetra(lenArr)
 
-        # Average Temperature Factors.
+        # Sum and Average Temperature Factors.
         SumTF = (a_tf + b_tf + c_tf + d_tf)
         AvgTF = round(SumTF / 4, 4)
 
-        print (AB, AC, AD, BC, BD, CD, SumL, AvgL, DevL, DevT, Vol)
+        # Data List
+        line =  [pdbid, oneLet, sortOneLet, flp, sortflp, one, two, three, four, AB, AC, AD, BC, BD, CD, SumL, AvgL, DevL, DevT, Vol, a_tf, b_tf, c_tf, d_tf, SumTF, AvgTF]
+        Data.append(line)
+    return Data
 
 
-ProteinDelaunay(pdbid, chainid)
+ProDelaunay = ProteinDelaunay(pdbid, chainid)
+List_to_CSV(pdbid + '_Delaunay.csv', ProDelaunay)
+
