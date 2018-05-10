@@ -176,7 +176,7 @@ def ProteinDelaunay(pdbid, chain):
         DevT = DevTetra(lenArr)
 
         # Sum and Average Temperature Factors.
-        SumTF = (a_tf + b_tf + c_tf + d_tf)
+        SumTF = round((a_tf + b_tf + c_tf + d_tf), 4)
         AvgTF = round(SumTF / 4, 4)
 
         # Data List
